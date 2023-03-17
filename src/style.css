@@ -1,0 +1,62 @@
+@font-face {
+  font-family: 'Bloxat';
+  src: url('./fonts/bloxat-font/Bloxat-PDoE.ttf');
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-image: url('assets/paul-volkmer-qVotvbsuM_c-unsplash.jpg');
+}
+
+header {
+  margin-top: 5rem;
+  display: flex;
+  justify-content: center;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+  gap: 30px;
+}
+
+canvas {
+  background-color: white;
+  opacity: 0.3;
+  border: 5px solid black;
+}
+
+.game-info {
+  font-family: 'Bloxat';
+  color: hsl(50, 10%, 88%);
+}
+
+.game-info > div {
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.game-info > div > h3 {
+  font-size: 2rem;
+}
+
+.game-info > div > p {
+  font-size: 1.6rem;
+}
+
+.score > h3 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.3rem;
+}
+
+#sound {
+  cursor: pointer;
+}
+
+
