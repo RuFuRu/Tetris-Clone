@@ -28,7 +28,7 @@ main {
 
 canvas {
   background-color: white;
-  opacity: 0.3;
+  opacity: 0.5;
   border: 5px solid black;
 }
 
@@ -64,6 +64,10 @@ canvas {
   outline: none;
   width: 100px;
   height: 100px;
+}
+
+.block {
+  display: none;
 }
 
 
