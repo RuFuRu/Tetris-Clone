@@ -23,7 +23,7 @@ function getGameBoard(): number[][] {
     )
 }
 
-let randomShape = Math.floor(Math.random() * 5);
+let randomShape = Math.floor(Math.random() * 7);
 let randomColour = colorRandomizer();
 
 function drawPiece() {
@@ -55,7 +55,17 @@ function collisionCheck(piece: pieceInterface, gameBoard: number[][], pieceShape
       }
     }
     return false;
-  }
+}
+
+function rotatePiece(pieceShape: number[][]) {
+    for(let i = 0; i < pieceShape.length; ++i) {
+        for(let j = 0; j < i; ++j) {
+            [pieceShape[i][j], pieceShape[j][i]] = [pieceShape[j][i], pieceShape[i][j]]
+        }
+    }
+
+    pieceShape.forEach(row => row.reverse());
+}
 
 function update() {
     getGameBoard();
@@ -91,6 +101,9 @@ document.addEventListener('keydown', (e) => {
                 movePiece({x: 1, y: 0});
                 moved = true;
             }
+            break;
+        case "ArrowUp":
+            rotatePiece(SHAPE[randomShape]);
             break;
     }
     if (moved) {
