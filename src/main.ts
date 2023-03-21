@@ -33,7 +33,6 @@ function drawBoard(gameboard: number[][]) {
     gameboard.forEach((row, y) => {
         row.forEach((val, x) => {
             if(val > 0) {
-                //randomShape = Math.floor(Math.random() * 7);
                 ctx.drawImage(randomColour,x,y,1,1)
             }
         })
@@ -108,6 +107,7 @@ function update() {
             if(!collisionCheck({x: piece.x, y: piece.y + 1}, gameboard, SHAPE[randomShape])) {
                 movePiece({x: 0, y: 1});
                 ctx.clearRect(0,0,canvas.width,canvas.height);
+                drawBoard(gameboard)
                 drawPiece(randomShape);
             } else {
                 freeze(SHAPE[randomShape], gameboard, piece.x, piece.y);
@@ -156,6 +156,7 @@ document.addEventListener('keydown', (e) => {
     }
     if (moved) {
         ctx.clearRect(0,0,canvas.width,canvas.height);
+        drawBoard(gameboard);
         drawPiece(randomShape);
     }
 })
