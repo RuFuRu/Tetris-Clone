@@ -45,5 +45,4 @@ const piece = {
     h: 30,
 }
 
-
-export {COLS, ROWS, SHAPE, piece}
+export { COLS, ROWS, SHAPE, piece }
