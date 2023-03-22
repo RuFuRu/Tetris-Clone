@@ -55,6 +55,11 @@ canvas {
   margin-bottom: 0.3rem;
 }
 
+.level > h3 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.3rem;
+}
+
 .sound {
   background-color: transparent;
   background-repeat: no-repeat;

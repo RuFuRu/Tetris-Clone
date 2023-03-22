@@ -96,13 +96,26 @@ function freeze(pieceShape: number[][], gameBoard: number[][], pieceX: number, p
     return gameBoard;
 }
 
+let interval = 1000;
+
+function speedUp(): number {
+    const level = document.querySelector('.level > p') as HTMLParagraphElement;
+    setInterval(() => {
+        interval -= 100;
+        level.textContent = `${parseInt((level.textContent) as string) + 1}`
+    },30000);
+    return interval;
+}
+
 function update() {
     drawPiece(randomShape);
+    speedUp();
     let lastUpdateTime = Date.now();
     function gameLoop() {
         const currentTime = Date.now();
         const deltaTime = currentTime - lastUpdateTime;
-        if(deltaTime >= 1000) {
+        console.log(interval)
+        if(deltaTime >= interval) {
             lastUpdateTime = currentTime;
             if(!collisionCheck({x: piece.x, y: piece.y + 1}, gameboard, SHAPE[randomShape])) {
                 movePiece({x: 0, y: 1});
