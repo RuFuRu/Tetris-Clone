@@ -16,7 +16,6 @@ let randomShape = Math.floor(Math.random() * 7);
 let randomColour = colorRandomizer();
 const gameboard = getGameBoard();
 let interval = 1000;
-let requestId: number;
 let gameOverCheck = false;
 
 const piece = {
