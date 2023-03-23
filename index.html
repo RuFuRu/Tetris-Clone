@@ -21,6 +21,9 @@
         <img src="./src/assets/blocks/block_purple.png" alt="block" class="block" id="block_purple">
         <img src="./src/assets/blocks/block_red.png" alt="block" class="block" id="block_red">
         <img src="./src/assets/blocks/block_yellow.png" alt="block" class="block" id="block_yellow">
+        <div class="gameover">
+          <p>GAME OVER</p>
+        </div>
       </section>
       <section class="game-info">
         <div class="score">
@@ -29,7 +32,7 @@
         </div>
         <div class="time">
           <h3>Time</h3>
-          <p>0:00</p>
+          <p><span id="minutes">0</span>:<span id="seconds">00</span></p>
         </div>
         <div class="level">
           <h3>Level</h3>
@@ -38,6 +41,7 @@
         <button class="sound">
           <img src="./src/assets/sound_off.svg" alt="sound" id="sound">
         </button>
+        <button class="restart">Restart</button>
       </section>
     </main>
     <script type="module" src="/src/main.ts"></script>

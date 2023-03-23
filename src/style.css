@@ -32,9 +32,42 @@ canvas {
   border: 5px solid black;
 }
 
+.canvas-container {
+  position: relative;
+}
+
+.gameover {
+  display: none;
+  font-family: 'Bloxat';
+  color: hsl(0, 95%, 45%);
+  font-size: 5rem;
+  position: absolute;
+  text-align: center;
+  top: 25%;
+  /*background-color: hsla(0, 0%, 100%,0.5);*/
+}
+
 .game-info {
   font-family: 'Bloxat';
   color: hsl(50, 10%, 88%);
+  display: flex;
+  flex-direction: column;
+}
+
+.game-info > .restart {
+  font-family: 'Bloxat';
+  background-color: transparent;
+  color: white;
+  border: solid white 5px;
+  padding: 0.7rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+  margin-top: auto;
+  margin-bottom: 3rem;
+}
+
+.restart:hover {
+  scale: 1.1;
 }
 
 .game-info > div {
@@ -74,5 +107,4 @@ canvas {
 .block {
   display: none;
 }
-
 
