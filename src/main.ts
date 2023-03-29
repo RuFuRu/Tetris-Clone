@@ -60,7 +60,11 @@ function drawPiece(shape: number) {
 }
 
 function movePiece(p: pieceInterface) {
-    piece.x += p.x;
+    if (keyUpPressed && keyRightPressed && piece.x + p.x + SHAPE[randomShape][0].length > COLS) {
+        piece.x = COLS - SHAPE[randomShape][0].length;
+    } else {
+        piece.x += p.x;
+    }
     piece.y += p.y;
 }
 
@@ -80,7 +84,7 @@ function collisionCheck(piece: pieceInterface, gameBoard: number[][], pieceShape
     return false;
 }
 
-function rotatePiece(pieceShape: number[][]) {
+function rotatePiece(pieceShape: number[][], gameboard: number[][]) {
     for(let i = 0; i < pieceShape.length; ++i) {
         for(let j = 0; j < i; ++j) {
             [pieceShape[i][j], pieceShape[j][i]] = [pieceShape[j][i], pieceShape[i][j]]
@@ -88,6 +92,59 @@ function rotatePiece(pieceShape: number[][]) {
     }
 
     pieceShape.forEach(row => row.reverse());
+
+    if(collisionCheck({x: piece.x, y: piece.y},gameboard,pieceShape)) {
+        wallKick(piece,SHAPE[randomShape],gameboard);
+    } else {
+        return
+    }
+}
+
+function wallKick(piece: pieceInterface, pieceShape: number[][], gameboard: number[][]) {
+    const wallKicks = [
+      [0, 0],
+      [-1, 0],
+      [1, 0],
+      [0, -1],
+      [0, 1],
+      [-1, -1],
+      [-1, 1],
+      [1, -1],
+      [1, 1],
+      [-2, 0],
+      [2, 0],
+      [0, -2],
+      [0, 2]
+    ];
+  
+    for (let i = 0; i < wallKicks.length; i++) {
+      const [xOffset, yOffset] = wallKicks[i];
+  
+      // Attempt to move the piece to its new location
+      piece.x += xOffset;
+      piece.y += yOffset;
+  
+      // If the move is valid, return the new piece position
+      if (!collisionCheck(piece, gameboard, pieceShape)) {
+        return [piece.x, piece.y];
+      }
+  
+      // Move is invalid, so undo the move
+      piece.x -= xOffset;
+      piece.y -= yOffset;
+    }
+  
+    // All wall kicks failed, return null
+    return null;
+}
+
+function handleSimultaneousKeyEvents(): boolean {
+    if(keyUpPressed && keyRightPressed) {
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 function freeze(pieceShape: number[][], gameBoard: number[][], pieceX: number, pieceY: number): number[][] {
@@ -134,26 +191,29 @@ function getScore(lines: number): number {
            0
 }
 
-let lines = 0;
+
 let score = 0;
 
 function lineClear(gameboard: number[][]) {
     const scoreBoard = document.querySelector('.score > p') as HTMLParagraphElement;
-    for (let y = gameboard.length - 1; y >= 0; y--) {
-        if (gameboard[y].every(val => val > 0)) {
-          lines++;
-          for (let i = y; i > 0; i--) {
-            gameboard[i] = gameboard[i - 1].slice();
-          }
-          gameboard[0] = Array(COLS).fill(0);
-          y++; // skip the new row we just added
+        
+    
+    const linesToClear: number[] = [];
+    gameboard.forEach((row, index) => {
+        if(row.every(val => val > 0)) {
+            linesToClear.push(index);
         }
-      }
-    if(lines > 0) {
-        score += getScore(lines);
+    })
+
+    if(linesToClear.length > 0) {
+        linesToClear.forEach((lineIndex) => {
+            gameboard.splice(lineIndex,1);
+            gameboard.unshift(new Array(gameboard[0].length).fill(0));
+        })
+        score += getScore(linesToClear.length);
         scoreBoard.textContent = `${score}`;
-        lines = 0;
     }
+    
 }
 
 function gameOver() {
@@ -202,8 +262,11 @@ function update() {
     gameLoop();
 }
 
-
 update();
+
+
+let keyUpPressed = false;
+let keyRightPressed = false;
 
 document.addEventListener('keydown', (e) => {
     let moved = false;
@@ -223,17 +286,31 @@ document.addEventListener('keydown', (e) => {
         case "ArrowRight":
             if(!collisionCheck({x: piece.x + 1, y: piece.y}, gameboard, SHAPE[randomShape])) {
                 movePiece({x: 1, y: 0});
+                keyRightPressed = true;
                 moved = true;
             }
             break;
         case "ArrowUp":
-            rotatePiece(SHAPE[randomShape]);
+            rotatePiece(SHAPE[randomShape], gameboard);
+            moved = true;
+            keyUpPressed = true;
             break;
     }
     if (moved) {
         ctx.clearRect(0,0,canvas.width,canvas.height);
         drawBoard(gameboard);
         drawPiece(randomShape);
+    }
+})
+
+document.addEventListener('keydown', (e) => {
+    switch(e.key) {
+        case "ArrowUp":
+            keyUpPressed = false;
+            break;
+        case "ArrowRight":
+            keyRightPressed = false;
+            break;
     }
 })
 
