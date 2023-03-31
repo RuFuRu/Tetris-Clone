@@ -56,11 +56,10 @@ function drawPiece(shape: number) {
             }
         })
     })
-    //drawBoard(gameboard);
 }
 
 function movePiece(p: pieceInterface) {
-    if (keyUpPressed && keyRightPressed && piece.x + p.x + SHAPE[randomShape][0].length > COLS) {
+    if (piece.x + p.x + SHAPE[randomShape][0].length > COLS) {
         piece.x = COLS - SHAPE[randomShape][0].length;
     } else {
         piece.x += p.x;
@@ -138,14 +137,6 @@ function wallKick(piece: pieceInterface, pieceShape: number[][], gameboard: numb
     return null;
 }
 
-function handleSimultaneousKeyEvents(): boolean {
-    if(keyUpPressed && keyRightPressed) {
-        return true;
-    }
-    else {
-        return false;
-    }
-}
 
 function freeze(pieceShape: number[][], gameBoard: number[][], pieceX: number, pieceY: number): number[][] {
     pieceShape.forEach((row, y) => {
@@ -265,9 +256,6 @@ function update() {
 update();
 
 
-let keyUpPressed = false;
-let keyRightPressed = false;
-
 document.addEventListener('keydown', (e) => {
     let moved = false;
     switch(e.key) {
@@ -286,14 +274,12 @@ document.addEventListener('keydown', (e) => {
         case "ArrowRight":
             if(!collisionCheck({x: piece.x + 1, y: piece.y}, gameboard, SHAPE[randomShape])) {
                 movePiece({x: 1, y: 0});
-                keyRightPressed = true;
                 moved = true;
             }
             break;
         case "ArrowUp":
             rotatePiece(SHAPE[randomShape], gameboard);
             moved = true;
-            keyUpPressed = true;
             break;
     }
     if (moved) {
@@ -306,10 +292,8 @@ document.addEventListener('keydown', (e) => {
 document.addEventListener('keydown', (e) => {
     switch(e.key) {
         case "ArrowUp":
-            keyUpPressed = false;
             break;
         case "ArrowRight":
-            keyRightPressed = false;
             break;
     }
 })
