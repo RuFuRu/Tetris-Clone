@@ -1,5 +1,6 @@
 import './style.css';
 import playMainTheme from './mainTheme';
+import popupLogic from './popupLogic';
 import colorRandomizer from './colorRandomizer';
 import { ROWS, COLS, SHAPE } from './constants';
 import { pieceInterface } from './interface';
@@ -9,6 +10,7 @@ const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
 const restartBtn = document.querySelector('.restart') as HTMLButtonElement;
 
 
+popupLogic();
 playMainTheme();
 
 
