@@ -1,5 +1,5 @@
-import soundOn from '/src_assets/sound_on.svg';
-import soundOff from '/src_assets/sound_off.svg';
+import soundOn from './src_assets/sound_on.svg';
+import soundOff from './src_assets/sound_off.svg';
 
 function playMainTheme() {
     let clicked = 0;
