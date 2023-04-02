@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'Bloxat';
-  src: url('../public/fonts/bloxat-font/Bloxat-PDoE.ttf');
+  src: url('/fonts/bloxat-font/Bloxat-PDoE.ttf');
 }
 
 * {
@@ -10,7 +10,7 @@
 }
 
 body {
-  background-image: url('../public/assets/paul-volkmer-qVotvbsuM_c-unsplash.jpg');
+  background-image: url('/assets/paul-volkmer-qVotvbsuM_c-unsplash.jpg');
 }
 
 header {
