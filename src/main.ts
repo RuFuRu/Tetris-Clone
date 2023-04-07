@@ -163,7 +163,11 @@ function speedUp() {
 function timer() {
     const seconds = document.querySelector('#seconds') as HTMLSpanElement;
     const minutes = document.querySelector('#minutes') as HTMLSpanElement;
-    setInterval(() => {
+    const interval = setInterval(() => {
+        if(gameOverCheck) {
+            clearInterval(interval);
+            return
+        }    
         if(parseInt(seconds.textContent as string) < 9) {
             seconds.textContent = `0${parseInt(seconds.textContent as string) + 1}`;
         } else {
