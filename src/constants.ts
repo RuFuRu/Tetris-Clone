@@ -39,4 +39,11 @@ const SHAPE = [
     
 ];
 
-export { COLS, ROWS, SHAPE }
+const PIECE = {
+    x: 0,
+    y: 0,
+    w: 30,
+    h: 30,
+}
+
+export { COLS, ROWS, SHAPE, PIECE }

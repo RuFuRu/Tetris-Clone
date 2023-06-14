@@ -1,35 +1,25 @@
 import './style.css';
-import playMainTheme from './mainTheme';
-import popupLogic from './popupLogic';
-import colorRandomizer from './colorRandomizer';
-import { ROWS, COLS, SHAPE } from './constants';
+import Util from './utilityFunc/util';
+import { ROWS, COLS, SHAPE, PIECE } from './constants';
 import { pieceInterface } from './interface';
 
 const canvas = document.querySelector('#canvas') as HTMLCanvasElement;
 const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
 const restartBtn = document.querySelector('.restart') as HTMLButtonElement;
 
-
-popupLogic();
-playMainTheme();
+Util.popupLogic()
+Util.playMainTheme();
 
 
 let randomShape = Math.floor(Math.random() * 7);
-let randomColour = colorRandomizer();
+let randomColour = Util.colorRandomizer();
 const gameboard = getGameBoard();
 let interval = 1000;
 let gameOverCheck = false;
 
-const piece = {
-    x: 0,
-    y: 0,
-    w: 30,
-    h: 30,
-}
-
-ctx.canvas.width = COLS * piece.w
-ctx.canvas.height = ROWS * piece.h
-ctx.scale(piece.w,piece.h);
+ctx.canvas.width = COLS * PIECE.w
+ctx.canvas.height = ROWS * PIECE.h
+ctx.scale(PIECE.w,PIECE.h);
 
 
 function getGameBoard(): number[][] {
@@ -54,19 +44,19 @@ function drawPiece(shape: number) {
     SHAPE[shape].map((row, y) => {
         row.map((value, x) => {
             if(value !== 0) {
-                ctx.drawImage(randomColour, piece.x + x, piece.y + y, 1, 1);
+                ctx.drawImage(randomColour, PIECE.x + x, PIECE.y + y, 1, 1);
             }
         })
     })
 }
 
 function movePiece(p: pieceInterface) {
-    if (piece.x + p.x + SHAPE[randomShape][0].length > COLS) {
-        piece.x = COLS - SHAPE[randomShape][0].length;
+    if (PIECE.x + p.x + SHAPE[randomShape][0].length > COLS) {
+        PIECE.x = COLS - SHAPE[randomShape][0].length;
     } else {
-        piece.x += p.x;
+        PIECE.x += p.x;
     }
-    piece.y += p.y;
+    PIECE.y += p.y;
 }
 
 function collisionCheck(piece: pieceInterface, gameBoard: number[][], pieceShape: number[][]): boolean {
@@ -94,8 +84,8 @@ function rotatePiece(pieceShape: number[][], gameboard: number[][]) {
 
     pieceShape.forEach(row => row.reverse());
 
-    if(collisionCheck({x: piece.x, y: piece.y},gameboard,pieceShape)) {
-        wallKick(piece,SHAPE[randomShape],gameboard);
+    if(collisionCheck({x: PIECE.x, y: PIECE.y},gameboard,pieceShape)) {
+        wallKick(PIECE,SHAPE[randomShape],gameboard);
     } else {
         return
     }
@@ -229,24 +219,24 @@ function update() {
         const deltaTime = currentTime - lastUpdateTime;
         if(deltaTime >= interval) {
             lastUpdateTime = currentTime;
-            if(!collisionCheck({x: piece.x, y: piece.y + 1}, gameboard, SHAPE[randomShape])) {
+            if(!collisionCheck({x: PIECE.x, y: PIECE.y + 1}, gameboard, SHAPE[randomShape])) {
                 movePiece({x: 0, y: 1});
                 ctx.clearRect(0,0,canvas.width,canvas.height);
                 drawBoard(gameboard)
                 drawPiece(randomShape);
             } else {
-                freeze(SHAPE[randomShape], gameboard, piece.x, piece.y);
+                freeze(SHAPE[randomShape], gameboard, PIECE.x, PIECE.y);
                 lineClear(gameboard);
 
-                if(piece.y === 0) {
+                if(PIECE.y === 0) {
                     gameOver()
                 }
 
-                piece.x = 0;
-                piece.y = 0;
+                PIECE.x = 0;
+                PIECE.y = 0;
 
                 randomShape = Math.floor(Math.random() * 7);
-                randomColour = colorRandomizer();
+                randomColour = Util.colorRandomizer();
 
                 drawBoard(gameboard);
                 drawPiece(randomShape);
@@ -266,19 +256,19 @@ document.addEventListener('keydown', (e) => {
     let moved = false;
     switch(e.key) {
         case "ArrowDown":
-            if(!collisionCheck({x: piece.x, y: piece.y + 1}, gameboard, SHAPE[randomShape])) {
+            if(!collisionCheck({x: PIECE.x, y: PIECE.y + 1}, gameboard, SHAPE[randomShape])) {
                 movePiece({x: 0, y: 1});
                 moved = true;
             }
             break;
         case "ArrowLeft":
-            if(!collisionCheck({x: piece.x - 1, y: piece.y}, gameboard, SHAPE[randomShape])) {
+            if(!collisionCheck({x: PIECE.x - 1, y: PIECE.y}, gameboard, SHAPE[randomShape])) {
                 movePiece({x: -1, y: 0});
                 moved = true;
             }
             break; 
         case "ArrowRight":
-            if(!collisionCheck({x: piece.x + 1, y: piece.y}, gameboard, SHAPE[randomShape])) {
+            if(!collisionCheck({x: PIECE.x + 1, y: PIECE.y}, gameboard, SHAPE[randomShape])) {
                 movePiece({x: 1, y: 0});
                 moved = true;
             }
