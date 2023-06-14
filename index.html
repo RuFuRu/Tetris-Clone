@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tetris Clone</title>
+    <script type="module" crossorigin src="/tetris-clone/assets/index-30519fe4.js"></script>
+    <link rel="stylesheet" href="/tetris-clone/assets/index-c87a7a2d.css">
+  </head>
+  <body>
+    <header>
+      <img src="/tetris-clone/assets/Mirrorsoft_tetris_logo.png" alt="logo"
+      height="60">
+    </header>
+    <main>
+      <section class="canvas-container">
+        <canvas id="canvas"></canvas>
+        <img src="/tetris-clone/assets/blocks/block_blue.png" alt="block" class="block" id="block_blue">
+        <img src="/tetris-clone/assets/blocks/block_green.png" alt="block" class="block" id="block_green">
+        <img src="/tetris-clone/assets/blocks/block_orange.png" alt="block" class="block" id="block_orange">
+        <img src="/tetris-clone/assets/blocks/block_pink.png" alt="block" class="block" id="block_pink">
+        <img src="/tetris-clone/assets/blocks/block_purple.png" alt="block" class="block" id="block_purple">
+        <img src="/tetris-clone/assets/blocks/block_red.png" alt="block" class="block" id="block_red">
+        <img src="/tetris-clone/assets/blocks/block_yellow.png" alt="block" class="block" id="block_yellow">
+        <div class="gameover">
+          <p>GAME OVER</p>
+        </div>
+      </section>
+      <section class="game-info">
+        <div class="score">
+          <h3>Score</h3>
+          <p>0</p>
+        </div>
+        <div class="time">
+          <h3>Time</h3>
+          <p><span id="minutes">0</span>:<span id="seconds">00</span></p>
+        </div>
+        <div class="level">
+          <h3>Level</h3>
+          <p>1</p>
+        </div>
+        <button class="sound">
+          <img src="/tetris-clone/assets/sound_off.svg" alt="sound" id="sound">
+        </button>
+        <button class="restart">Restart</button>
+      </section>
+    </main>
+    <div class="popup">
+      <h3>Instructions</h3>
+      <p>Arrow Up - rotate the piece</p>
+      <p>Arrow Right - move right</p>
+      <p>Arrow Left - move left</p>
+      <p>Arrow Down - speed up moving down</p>
+      <div class="close-popup">
+        <button class="close-popup-btn">Understood</button>
+      </div>
+    </div>
+    <div class="overlay active"></div>
+    
+  </body>
+</html>
